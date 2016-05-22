@@ -62,12 +62,15 @@ def add_new_operation(calc, operation):
     :param operation: Dict with the single operation to be added.
                       ie: {'add': add_function}
     """
+    
+    # Test operation, raise error if invalid
     if not isinstance(operation, dict):
         raise InvalidOperation('Given operation is invalid.')
     if len(operation) != 1:
         raise InvalidParams('Can only add one operation at a time')
-        
-    operation_name, operation_function = operation.items()[0]
+    
+    # Add operation to calculator
+    operation_name, operation_function = next(iter(operation.items()))
     
     calc['operations'][operation_name] = operation_function
 
@@ -76,7 +79,7 @@ def get_operations(calc):
     """
     Returns the list of operation names supported by given calculator.
     """
-    return calc['operations'].keys()
+    return list(calc['operations'].keys())
 
 
 def get_history(calc):
@@ -106,5 +109,3 @@ def repeat_last_operation(calc):
     """
     if calc['history']:
         return calc['history'][-1][3]
-
-
